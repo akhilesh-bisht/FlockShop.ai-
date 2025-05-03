@@ -6,13 +6,6 @@ const wishlistSchema = new mongoose.Schema(
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     collaborators: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     createdAt: { type: Date, default: Date.now },
-    reactions: [
-      {
-        user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-        emoji: { type: String },
-        productId: { type: mongoose.Schema.Types.ObjectId, ref: "ProductItem" },
-      },
-    ],
   },
   { timestamps: true }
 );
