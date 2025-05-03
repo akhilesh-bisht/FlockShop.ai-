@@ -1,8 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import userRoute from "./routes/userRoute.js";
 import connectDB from "./config/db.js";
+import userRoute from "./routes/userRoute.js";
+import wishlistRoutes from "./routes/wishlistRoutes.js";
 // Load environment variables
 dotenv.config();
 
@@ -17,6 +18,9 @@ connectDB();
 
 //  authentication routes
 app.use("/api/auth", userRoute);
+// wishlist routes
+
+app.use("/api/wishlists", wishlistRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server is running with import syntax!");

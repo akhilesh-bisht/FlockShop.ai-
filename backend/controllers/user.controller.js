@@ -1,15 +1,17 @@
 import { User } from "../models/user.model.js";
 
-// Register User
+//  register User
+
 export const registerUser = async (req, res) => {
   try {
-    const { email, password, fullName } = req.body;
+    const { email, password } = req.body;
 
     // Validate input
-    if (!email || !password || !fullName) {
+    if (!email || !password) {
       return res.status(400).json({ error: "All fields are required." });
     }
 
+    // Normalize email
     const normalizedEmail = email.toLowerCase().trim();
 
     // Check if user already exists
@@ -31,33 +33,16 @@ export const registerUser = async (req, res) => {
     const newUser = await User.create({
       email: normalizedEmail,
       password,
-      fullName,
-    });
-
-    // Generate token after registration for auto-login
-    const accessToken = newUser.generateAccessToken();
-
-    // Set cookie with token
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
 
     res.status(201).json({
       message: "User registered successfully",
       user: {
         _id: newUser._id,
-        fullName: newUser.fullName,
         email: newUser.email,
       },
-      accessToken,
     });
   } catch (error) {
-    if (error.code === 11000) {
-      return res.status(400).json({ error: "Email already in use." });
-    }
     console.error("Registration Error:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
