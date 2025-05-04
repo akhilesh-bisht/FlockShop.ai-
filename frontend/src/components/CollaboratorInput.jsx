@@ -4,6 +4,7 @@ import { useState } from "react";
 import { PlusIcon, XIcon } from "@heroicons/react/outline";
 
 const CollaboratorInput = ({
+  products,
   wishlistId,
   collaborators = [],
   onAddCollaborator,
@@ -12,6 +13,8 @@ const CollaboratorInput = ({
   const [userId, setUserId] = useState("");
   const [error, setError] = useState("");
   const [isAdding, setIsAdding] = useState(false); //  Loading state
+
+  console.log(products);
 
   const handleAddCollaborator = async () => {
     if (!userId.trim()) {
@@ -35,7 +38,7 @@ const CollaboratorInput = ({
     console.log(collaboratorId);
 
     try {
-      await onRemoveCollaborator(wishlistId, collaboratorId);
+      await onRemoveCollaborator(collaboratorId);
     } catch (err) {
       setError(err.message || "Failed to remove collaborator");
     }

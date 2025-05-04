@@ -105,10 +105,10 @@ export const wishlistApi = {
   },
 
   //  remove collaborator
-  removeCollaborator: async (wishlistId, userId) => {
+  removeCollaborator: async (productId, userId) => {
     try {
       const response = await api.delete(
-        `/wishlists/${wishlistId}/remove-collaborator`,
+        `/wishlists/${productId}/remove-collaborator`,
         { userId }
       );
       return response.data;

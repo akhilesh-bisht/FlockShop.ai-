@@ -133,8 +133,8 @@ const WishlistDetail = () => {
     return response;
   };
   //   remove collaborator
-  const handleRemoveCollaborator = async (wishlistId, userId) => {
-    await wishlistApi.removeCollaborator(wishlistId, userId);
+  const handleRemoveCollaborator = async (productId, userId) => {
+    await wishlistApi.removeCollaborator(productId, userId);
     setWishlist({
       ...wishlist,
       collaborators: (wishlist.collaborators || []).filter(

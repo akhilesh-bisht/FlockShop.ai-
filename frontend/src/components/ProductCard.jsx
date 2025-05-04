@@ -1,12 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { PencilIcon, TrashIcon, ExternalLinkIcon } from "@heroicons/react/outline"
+import { useState } from "react";
+import {
+  PencilIcon,
+  TrashIcon,
+  ExternalLinkIcon,
+} from "@heroicons/react/outline";
 
 const ProductCard = ({ product, onEdit, onDelete }) => {
-  const { id, name, description, price, url, imageUrl } = product
-  const [isHovered, setIsHovered] = useState(false)
-
+  const { id, name, description, price, url, imageUrl } = product;
+  const [isHovered, setIsHovered] = useState(false);
+  
   return (
     <div
       className="relative bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden"
@@ -16,9 +20,15 @@ const ProductCard = ({ product, onEdit, onDelete }) => {
       {/* Product image */}
       <div className="h-48 w-full bg-gray-200 overflow-hidden">
         {imageUrl ? (
-          <img src={imageUrl || "/placeholder.svg"} alt={name} className="w-full h-full object-cover" />
+          <img
+            src={imageUrl || "/placeholder.svg"}
+            alt={name}
+            className="w-full h-full object-cover"
+          />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400">No image</div>
+          <div className="w-full h-full flex items-center justify-center text-gray-400">
+            No image
+          </div>
         )}
       </div>
 
@@ -26,9 +36,17 @@ const ProductCard = ({ product, onEdit, onDelete }) => {
       <div className="p-4">
         <h3 className="text-lg font-semibold text-gray-900 mb-1">{name}</h3>
 
-        {price && <p className="text-lg font-bold text-gray-900 mb-2">${Number.parseFloat(price).toFixed(2)}</p>}
+        {price && (
+          <p className="text-lg font-bold text-gray-900 mb-2">
+            ${Number.parseFloat(price).toFixed(2)}
+          </p>
+        )}
 
-        {description && <p className="text-sm text-gray-600 mb-3 line-clamp-2">{description}</p>}
+        {description && (
+          <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+            {description}
+          </p>
+        )}
 
         {url && (
           <a
@@ -45,7 +63,9 @@ const ProductCard = ({ product, onEdit, onDelete }) => {
 
       {/* Action buttons */}
       <div
-        className={`absolute top-2 right-2 flex space-x-1 transition-opacity duration-200 ${isHovered ? "opacity-100" : "opacity-0"}`}
+        className={`absolute top-2 right-2 flex space-x-1 transition-opacity duration-200 ${
+          isHovered ? "opacity-100" : "opacity-0"
+        }`}
       >
         <button
           onClick={() => onEdit(product)}
@@ -64,7 +84,7 @@ const ProductCard = ({ product, onEdit, onDelete }) => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;
