@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/", createWishlist);
 
 // Get all wishlists for a user
-router.get("/user/:userId", getWishlistsByUser);
+router.get("/", getWishlistsByUser);
 
 // Get a single wishlist by ID
 router.get("/:id", getWishlistById);
@@ -27,7 +27,7 @@ router.put("/:id", updateWishlistTitle);
 router.put("/:id/add-collaborator", addCollaborator);
 
 // Remove a collaborator
-router.put("/:id/remove-collaborator", removeCollaborator);
+router.delete("/:id/remove-collaborator", removeCollaborator);
 
 // Delete wishlist
 router.delete("/:id", deleteWishlist);

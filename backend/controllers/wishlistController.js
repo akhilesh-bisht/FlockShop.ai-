@@ -22,14 +22,19 @@ export const createWishlist = async (req, res) => {
 // 2. Get all wishlists for a user
 export const getWishlistsByUser = async (req, res) => {
   try {
-    const { userId } = req.params;
+    // Fetch all the wishlists (without any user-specific filter)
+    const wishlists = await Wishlist.find().populate("createdBy", "name email"); // Populate the createdBy field with user details (name, email)
 
-    const wishlists = await Wishlist.find({
-      collaborators: userId,
-    }).populate("createdBy", "name email");
+    // If no wishlists are found, return a 404 error
+    if (!wishlists.length) {
+      return res.status(404).json({ message: "No wishlists found." });
+    }
 
+    // Return the wishlists as a response
     res.status(200).json(wishlists);
   } catch (error) {
+    // Handle server errors
+    console.error(error);
     res.status(500).json({ message: "Error fetching wishlists", error });
   }
 };
@@ -93,7 +98,7 @@ export const addCollaborator = async (req, res) => {
 // 6. Remove a collaborator
 export const removeCollaborator = async (req, res) => {
   try {
-    const { id } = req.params; // wishlistId
+    const { id } = req.params;
     const { userId } = req.body;
 
     const wishlist = await Wishlist.findById(id);
