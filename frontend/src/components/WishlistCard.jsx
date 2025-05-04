@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { CalendarIcon, UsersIcon } from "@heroicons/react/outline";
-
+import { wishlistApi } from "../api/api";
 const WishlistCard = ({ wishlist, id }) => {
   const { title, createdAt, collaborators = [], productCount = 0 } = wishlist;
   console.log(id);

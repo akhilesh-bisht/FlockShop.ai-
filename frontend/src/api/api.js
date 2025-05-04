@@ -39,6 +39,7 @@ export const authApi = {
 };
 
 // Wishlist API
+
 export const wishlistApi = {
   getAllWishlists: async () => {
     try {
@@ -49,6 +50,8 @@ export const wishlistApi = {
     }
   },
 
+  //  get wishlists by user id
+
   getWishlistById: async (id) => {
     try {
       const response = await api.get(`/wishlists/${id}`);
@@ -58,6 +61,7 @@ export const wishlistApi = {
     }
   },
 
+  //  create a wishlist
   createWishlist: async (data) => {
     try {
       const response = await api.post("/wishlists", data);
@@ -67,15 +71,17 @@ export const wishlistApi = {
     }
   },
 
+  // update wishlist title
   updateWishlistTitle: async (id, title) => {
     try {
-      const response = await api.patch(`/wishlists/${id}`, { title });
+      const response = await api.put(`/wishlists/${id}`, { title });
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
     }
   },
 
+  //  delete wishlist
   deleteWishlist: async (id) => {
     try {
       const response = await api.delete(`/wishlists/${id}`);
@@ -85,6 +91,7 @@ export const wishlistApi = {
     }
   },
 
+  //  add collaborator
   addCollaborator: async (wishlistId, userId) => {
     try {
       const response = await api.put(
@@ -97,6 +104,7 @@ export const wishlistApi = {
     }
   },
 
+  //  remove collaborator
   removeCollaborator: async (wishlistId, userId) => {
     try {
       const response = await api.delete(
@@ -111,6 +119,7 @@ export const wishlistApi = {
 };
 
 // Product API
+
 export const productApi = {
   getProductsByWishlistId: async (wishlistId) => {
     try {

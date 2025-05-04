@@ -11,6 +11,7 @@ const CollaboratorInput = ({
 }) => {
   const [userId, setUserId] = useState("");
   const [error, setError] = useState("");
+  const [isAdding, setIsAdding] = useState(false); //  Loading state
 
   const handleAddCollaborator = async () => {
     if (!userId.trim()) {
@@ -20,14 +21,19 @@ const CollaboratorInput = ({
 
     try {
       setError("");
+      setIsAdding(true);
       await onAddCollaborator(wishlistId, userId);
-      setUserId(""); // Clear input after successful add
+      setUserId(""); // Clear input
     } catch (err) {
       setError(err.message || "Failed to add collaborator");
+    } finally {
+      setIsAdding(false);
     }
   };
 
   const handleRemoveCollaborator = async (collaboratorId) => {
+    console.log(collaboratorId);
+
     try {
       await onRemoveCollaborator(wishlistId, collaboratorId);
     } catch (err) {
@@ -61,14 +67,27 @@ const CollaboratorInput = ({
 
         <button
           onClick={handleAddCollaborator}
-          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          disabled={isAdding}
+          className={`inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+            isAdding
+              ? "bg-indigo-400 cursor-not-allowed"
+              : "bg-indigo-600 hover:bg-indigo-700"
+          } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
         >
-          <PlusIcon className="h-4 w-4 mr-1" />
-          Add
+          {isAdding ? (
+            <>
+              <span className="loader mr-2" />
+              Adding...
+            </>
+          ) : (
+            <>
+              <PlusIcon className="h-4 w-4 mr-1" />
+              Add
+            </>
+          )}
         </button>
       </div>
 
-      {/* List of collaborators */}
       <div className="space-y-3">
         {collaborators.length === 0 ? (
           <p className="text-sm text-gray-500">No collaborators yet</p>

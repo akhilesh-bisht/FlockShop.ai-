@@ -29,6 +29,7 @@ const WishlistDetail = () => {
   const [editingProduct, setEditingProduct] = useState(null);
 
   useEffect(() => {
+    //    // Fetch wishlist and products by ID
     const fetchWishlistData = async () => {
       try {
         setLoading(true);
@@ -55,6 +56,7 @@ const WishlistDetail = () => {
     fetchWishlistData();
   }, [id]);
 
+  // Handle title update
   const handleUpdateTitle = async () => {
     if (!newTitle.trim() || newTitle === wishlist.title) {
       setIsEditingTitle(false);
@@ -69,6 +71,8 @@ const WishlistDetail = () => {
       setError(err?.response?.data?.message || "Failed to update title.");
     }
   };
+
+  //  add product
 
   const handleProductSubmit = async (productData) => {
     try {
@@ -99,7 +103,7 @@ const WishlistDetail = () => {
       setError(err?.response?.data?.message || "Failed to save product.");
     }
   };
-
+  //  delete product
   const handleDeleteProduct = async (productId) => {
     if (!window.confirm("Are you sure you want to delete this product?"))
       return;
@@ -112,11 +116,14 @@ const WishlistDetail = () => {
     }
   };
 
+  //  edit product
+
   const handleEditProduct = (product) => {
     setEditingProduct(product);
     setShowAddProductForm(false);
   };
 
+  //  add collaborator
   const handleAddCollaborator = async (wishlistId, userId) => {
     const response = await wishlistApi.addCollaborator(wishlistId, userId);
     setWishlist({
@@ -125,7 +132,7 @@ const WishlistDetail = () => {
     });
     return response;
   };
-
+  //   remove collaborator
   const handleRemoveCollaborator = async (wishlistId, userId) => {
     await wishlistApi.removeCollaborator(wishlistId, userId);
     setWishlist({
@@ -280,6 +287,7 @@ const WishlistDetail = () => {
 
         <div className="lg:col-span-1">
           <CollaboratorInput
+            products={products}
             wishlistId={id}
             collaborators={wishlist.collaborators || []}
             onAddCollaborator={handleAddCollaborator}
